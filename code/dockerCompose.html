@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Demo</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="index.html">Home</a></li>
+       <li><a href="git.html">Git</a></li>
+      <li><a href="dockerToAzure.html">Docker & Azure</a></li>
+      <li class="active"><a href="dockerCompose.html">Docker Compose</a></li>
+      <li><a href="vi.html">Vim</a></li>
+      <li><a href="commandList.html">Linux Commands</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+	<h1>Docker Compose</h1>
+	<p>You can also run multiple containers using Docker Compose with ACI integration.
+	Open your favorite browser and navigate to: <a href="https://github.com/pmckeetx/timestamper">https://github.com/pmckeetx/timestamper</a></p>
+	<p>Click on the “fork” button in the top right corner of the window. This will make a “copy” of the demo repository 
+	into your GitHub account.On your forked version of the repository, click the green “Code” button and copy the github url.
+	Open the terminal on your local machine and run the following git command to clone the repository to your local development 
+	machine. Make sure you replace the &lt&ltgithub username&gt&gt with your GitHub username.</p>
+
+	<p><strong>git clone git@github.com:&ltgithub username&gt/timestamper.git</strong></p>
+	<p>Open the docker-compose.yml file and replace &lt&ltusername&gt&gt with your Docker ID. Use the local Docker 
+	context with the command <strong>$ docker context use default</strong> </p>
+
+	<p>Docker compose to build the application:</p>
+	<p><strong>$ docker-compose up --build</strong></p>
+	<p>Docker will build a timestamp image where you can navigate to and click the timestamp button 
+	at <a href="http://localhost:5000/"> http://localhost:5000/</a></p>
+
+	<p>Run the application on ACI with docker compose integration:</p>
+	<p><strong>$ docker-compose push </strong></p>
+	<p>This will push the image to Docker Hub so ACI can pull it and run it.
+	Now switch to aci context to run the appilication using ACI:</p>
+	<p><strong>$ docker context use myaci </strong> </p>
+	
+	<p>Now that the application is running its time to start it in the cloud:</p>
+	<p><strong>$ docker compose up </strong></p>
+	<p>To verify that it is running get the ip address and list of running containers:</p>
+	<p><strong>$ docker ps </strong></p>
+	<p>You can copy and paste the ip address into your browser to view it then look at the Redis container logs:</p>
+	<p><strong>$ docker logs timestamper_backend </strong></p>
+	<p>To end the compose application: </p>
+	<p><strong>$ docker compose down</strong></p>
+	
+
+</div>

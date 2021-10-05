@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Demo</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="index.html">Home</a></li>
+       <li><a href="git.html">Git</a></li>
+      <li class="active"><a href="dockerToAzure.html">Docker & Azure</a></li>
+      <li><a href="dockerCompose.html">Docker Compose</a></li>
+      <li><a href="vi.html">Vim</a></li>
+      <li><a href="commandList.html">Linux Commands</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+	<h1>Docker to Azure Cloud</h1>
+	<p>Docker provides the ability to package and run an application in a loosely isolated environment called a container. 
+	To get started you will need to install docker on your machine, create a docker hub account, create an azure account,
+	have Git installed on the machine, and ide text editor such as PyCharm or vscode. </p>
+
+	<p>To log in to azure use the docker command <strong>$ docker login azure</strong> this will take you to your web browser to login 
+	to your azure account. After logging in you can close the window. To check what contexts are currently running on 
+	the machine use the command <strong>$ docker context list</strong> which will show you the context you are using for the Docker 	
+	commands which will have a “<strong>*</strong>” beside its name showing that is teh active context. </p>
+	
+	<p>Now to create and ACI context to run containers with. </p>
+	<p><strong>$ docker context create aci --help</strong></p>
+	<p>There will be flags shown to pass them and avoid the interactive questions to avoid this and pass the flags use </p>
+	<p><strong>$ docker context create aci myaci</strong></p>
+
+	<p>It will ask which subscription you would like to use if you have one then docker will use that. 
+	Now we need to select a resource group. You can choose one that has been created previously or choose 
+	“create a new resource group” using the arrow keys. If you choose to create a new one it will create it for you and give the 
+	status message that it was created. Now use the <strong>$ docker context list</strong> command to check contexts and it 
+	will show the ACI that was just created. </p>
+
+	<p>Running containers on the cloud:</p>
+	<p><strong>$ docker --context myaci run -d –name web -p 80:80 nginx </strong>. Docker will show that is has interacted 
+	with ACI by creating a container named “web”.</p>
+	<p>To switch contexts:</p>
+	<p><strong>$ docker context use myaci</strong></p>
+	<p><strong>$ docker ps</strong> This command will show the container instances running in the cloud rather than the local machine. 
+	You can copy and paste the IP address shown into your browser to show the nginx web server running.</p>
+	
+	<p>To look at container logs:</p>
+	<p><strong>$ docker logs web</strong></p>
+	<p>To stop and remove the container:</p>
+	<p><strong> $ docker rm web</strong></p>
+</div>
