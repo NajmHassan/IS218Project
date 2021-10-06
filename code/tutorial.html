@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Demo</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="tutorial.html">Home</a></li>
+       <li><a href="git.html">Git</a></li>
+      <li><a href="dockerToAzure.html">Docker & Azure</a></li>
+      <li><a href="dockerCompose.html">Docker Compose</a></li>
+      <li><a href="vi.html">Vim</a></li>
+      <li><a href="commandList.html">Linux Commands</a></li>
+      <li><a href="server.html">Apache/Nginx</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+	<h1>Website tutorial</h1>
+	<p>to Start this website you will need all of the components we talked about in this demo website starting with making a new folder in the terminal</h3>
+	<p><strong>mkdir websiteTutorial</strong> creates a new directory</p>
+	<p><strong>cd websiteTutorial</strong> go inside the new directory</p>
+	<p><strong>touch Dockerfile</strong> create a new docker file</p>
+	<p><strong>touch docker-compose.yml</strong> creates a new docker compose file</p>
+	<p><strong>mkdir public_html</strong>(create a new dir where we will store our HTML files in</p>
+  <p><strong>vi Dockerfile</strong> edit Dockerfile (click i to insert or edit once you enter the file). Now we will populate the file with the following code: </p>
+  <p> 
+    FROM php:5.6-apache-jessie <br>
+    RUN sed -i '/jessie-updates/d' /etc/apt/sources.list<br>
+    RUN apt-get update<br>
+    RUN apt-get update --fix-missing<br>
+    RUN apt-get install git cron rcconf libzip-dev zlib1g-dev libpng-dev libxml2-dev -y<br>
+    RUN a2enmod rewrite<br>
+
+    WORKDIR /var/www/html<br>
+    COPY ./ .<br>
+    RUN service apache2 restart<br>
+    EXPOSE 8000
+  </p>
+
+
+  <p><strong>vi docker-compose.yml</strong> edit docker-compose.yml (click i to insert or edit once you enter the file). Now we will populate the file with the following code:</p>
+  <p>
+    version: '3.5' <br>
+    services:<br>
+      'username':<br>
+        build: .<br>
+        volumes:<br>
+           - ./:/var/www/html<br>
+        ports:<br>
+           - 3001:80<br>
+        image: 'dockerhubID'/demo:latest<br>
+  </p>
+
+  <p>now we can create our HTML files. so lets run the following command to enter our directory <strong>cd public_html</strong> and then create a new file with the comman <strong>touch index.html</strong> then <strong>vi index.html</strong> edit the file (click i to insert or edit once you enter the file). Now we will populate the file with a basic header that says 'website tutorial'</p>
+
+
+<p>now that we have everything set, lets use docker (if not installed click  <a href="https://docs.docker.com/get-docker/">here</a> to install) to build  this locally to make sure it works</p>
+<p> <strong>docker-compose up --build</strong> and wait till it is done builing. when it is done, go to your browser paste this link:  http://localhost:3001/. you should see the html file you wrote! </p>
+<p> now we can push our code into dockerhub to be able to pull it from azure Cloud so lets run <strong>docker-compose push</strong></p>
+<p> now that we have our project on dockerhub. lets create an azurecloud account to run our project globally.</p>
+<p>click <a href = "https://azure.microsoft.com/en-us/free/students/"> here </a> to create an Azure account. Once you are done, get back on the terminal and run <strong>docker login azure</strong> which will take you to your browser to login.</p>
+<p> After logging in, youll want to create a new context to be able to use Azure cloud. run <strong> docker context create aci AzureCloud</strong> and then <strong>docker context use azureCloud</strong></p>
+<p>After switching context, start running your project by running the following command <strong>docker run 'something' 'IPADDRESS' -dp 80:80 'dockerhubID'/demo:latest</strong></p>
+<p>when it is done running, copy the 'IPaddress' specified and paste it in your browser! youll see the file you have running on Azure which means anyone can visit it with the specifed IPADDRESS!</p>
+<h3>Pushing to github repo</h3>
+<p>when you are ready to push your code to github, go ahead and check the git tab. start by going to the root file. then write these list of commands:</p>
+<p><strong>git init</strong></p>
+<p><strong>git add .</strong></p>
+<p><strong>git commit -m "your message"</strong></p>
+<p><strong>git push remote (branch name)</strong></p>
+</div>
